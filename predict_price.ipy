@@ -1,0 +1,5 @@
+import pandas as pd
+
+
+df_4 = pd.read_csv('book.csv')
+print(df_4, df_4.columns)
