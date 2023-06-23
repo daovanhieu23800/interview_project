@@ -5,9 +5,10 @@ import re
 import pandas as pd
 import time 
 from book_cat import get_cat
+from craw_image import dowload_img
 HEADERS = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"}
 LIMIT = 40
-TOTAL_PAGE = 20
+#TOTAL_PAGE = 20
 BOOK_CAT = 8322
 def get_product_per_page(book_cat, page):
     product_list_per_page = [] 
@@ -46,6 +47,7 @@ def get_product_per_page(book_cat, page):
 
             })
        # print(product_list_per_page)
+            dowload_img(book_id=product_data['id'],book_cat=product_data["categories"]['name'])
     return product_list_per_page
 
 def get_product(product_id):
@@ -61,23 +63,21 @@ def get_product(product_id):
 def main():
     product_list = []
     cat_list = get_cat()
-    #print(cat_list)
-    for i in range(13,23):
-    #for item in cat_list:
+
+    for i in range(0,23):
+
         print(cat_list[i])
-        for page in range(1,11):
-            #time.sleep(10)
-            if get_product_per_page(cat_list[i]['id'],page)== []:
-                time.sleep(12)
-                break
+        page=1 
+        while( get_product_per_page(cat_list[i]['id'],page) != []):
             product_list += (get_product_per_page(cat_list[i]['id'],page))
             time.sleep(12)
-           
+            page += 1
+        
             
     #print(product_list)
 
     df = df = pd.DataFrame(product_list)
-    df.to_csv('test2.csv')
+    df.to_csv('book_v2.csv')
 
 if __name__ == "__main__":
     main()

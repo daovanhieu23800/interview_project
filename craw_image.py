@@ -3,7 +3,7 @@ import requests
 import time
 import json
 import os
-folder_path = 'images'
+folder_path = 'images_v2'
 os.makedirs(folder_path, exist_ok=True)
 HEADERS = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"}
 
@@ -25,15 +25,14 @@ def download_image(url, category):
         with open(save_path, 'wb') as f:
             f.write(response.content)
         print(f"Downloaded: {url} -> {save_path}")
-    else:
-        print(f"Failed to download: {url}")
+   
+def dowload_img(book_id, book_cat):
+#for item in book_df.iloc:
+    #time.sleep(1)
+    # print(item)
+    # book_id = item['id']
 
-for item in book_df.iloc:
-    time.sleep(1)
-    print(item)
-    book_id = item['id']
-
-    book_cat = item['categories']
+    # book_cat = item['categories']
 
     product_info_link = f"https://tiki.vn/api/v2/products/{book_id}"
     response  = requests.get(product_info_link, headers=HEADERS)
